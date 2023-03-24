@@ -1,6 +1,7 @@
 import random
 
-def simularJugada(jugadorCambia):
+
+def simularJugada(jugadorCambia, imprimirResultado = True):
     puertas = {1, 2, 3}
 
     puertaGanadora = random.choice(list(puertas))
@@ -10,15 +11,32 @@ def simularJugada(jugadorCambia):
         puertas.remove(puertaGanadora)
         puertaVacia = random.choice(list(puertas))
 
-        gana = not jugadorCambia
+        if jugadorCambia:
+            puertas.remove(puertaVacia)
+            puertaCambio = puertas.pop()
+
+            gana = False
+        else:
+            gana = True
+
     else:
         puertas.remove(puertaGanadora)
         puertas.remove(eleccionJugador)
         puertaVacia = puertas.pop()
 
-        gana = jugadorCambia
+        if jugadorCambia:
+            puertaCambio = puertaGanadora
+            gana = True
+        else:
+            gana = False
 
-    # print(f'Jugador: {eleccionJugador}; Auto: {puertaGanadora}; Vacía: {puertaVacia}; Gana: {gana} (Cambió? {cambia})')
+    if imprimirResultado:
+        print(f'Puerta elegida por el participante: {eleccionJugador}')
+        print(f'Puerta abierta por el presentador:  {puertaVacia}')
+        print(f'Puerta donde está el auto:          {puertaGanadora}')
+        if jugadorCambia:
+            print(f'Jugador cambia a:                   {puertaCambio}')
+        print(f'Resultado:                          {"Gana" if gana else "Pierde"}')
 
     return gana
 
@@ -26,7 +44,8 @@ def simularJugada(jugadorCambia):
 def calcularFrecuenciaDeVictorias(numeroDeTiradas, jugadorCambia):
     victorias = 0
     for _ in range(numeroDeTiradas):
-        if simularJugada(jugadorCambia):
+        jugadorGana = simularJugada(jugadorCambia, imprimirResultado=False)
+        if jugadorGana:
             victorias += 1
     
     return victorias / numeroDeTiradas
