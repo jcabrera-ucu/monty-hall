@@ -10,7 +10,6 @@ def jugar(cambia):
         puertas.remove(puertaGanadora)
         puertaVacia = random.choice(list(puertas))
 
-
         gana = not cambia
     else:
         puertas.remove(puertaGanadora)
@@ -19,20 +18,19 @@ def jugar(cambia):
 
         gana = cambia
 
-    print(f'Jugador: {eleccionJugador}; Auto: {puertaGanadora}; Vacía: {puertaVacia}; Gana: {gana} (Cambió? {cambia})')
+    # print(f'Jugador: {eleccionJugador}; Auto: {puertaGanadora}; Vacía: {puertaVacia}; Gana: {gana} (Cambió? {cambia})')
 
     return gana
         
 
 if __name__ == '__main__':
-    tiradas = 5000
+    for tiradas in [1_000, 10_000, 100_000]:
+        jugadorCambia = [jugar(True) for x in range(1, tiradas + 1)] 
+        vecesGanaCambia = [x for x in jugadorCambia if x]
 
-    jugadorCambia = [jugar(True) for x in range(1, tiradas + 1)] 
-    vecesGanaCambia = [x for x in jugadorCambia if x]
+        jugadorNoCambia = [jugar(False) for x in range(1, tiradas + 1)] 
+        vecesGanaNoCambia = [x for x in jugadorNoCambia if x]
 
-    print(f'Frecuencia cuando cambia:    {len(vecesGanaCambia) / tiradas}')
-
-    jugadorNoCambia = [jugar(False) for x in range(1, tiradas + 1)] 
-    vecesGanaNoCambia = [x for x in jugadorNoCambia if x]
-
-    print(f'Frecuencia cuando no cambia: {len(vecesGanaNoCambia) / tiradas}')
+        print(f'Tiradas: {tiradas}')
+        print(f' - Frecuencia cuando cambia:    {len(vecesGanaCambia) / tiradas}')
+        print(f' - Frecuencia cuando no cambia: {len(vecesGanaNoCambia) / tiradas}')
