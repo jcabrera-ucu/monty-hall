@@ -57,6 +57,8 @@ def calcularFrecuenciaDeVictorias(numeroDeTiradas, jugadorCambia):
 if __name__ == '__main__':
     simularJugada(True)
     print(f'')
+    simularJugada(False)
+    print(f'')
     for tiradas in [1_000, 10_000, 100_000]:
         print(f'Tiradas: {tiradas}')
         print(f' - Frecuencia cuando cambia:    {calcularFrecuenciaDeVictorias(tiradas, True)}')
